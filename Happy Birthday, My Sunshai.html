@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, My Sunshai ✨</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Playfair Display, Cormorant Garamond, & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Tailwind Configuration & Custom Theme Tokens -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            editorial: ['"Cormorant Garamond"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            twilight: {
+              950: '#0D0814',
+              900: '#160E24',
+              800: '#231538',
+            },
+            rosegold: {
+              300: '#FADADD',
+              400: '#F4B6C2',
+              500: '#E5989B',
+              600: '#B5838D',
+            },
+            champagne: '#F9E7D2',
+          },
+          animation: {
+            'float-slow': 'float 8s ease-in-out infinite',
+            'float-delayed': 'float 10s ease-in-out 3s infinite',
+            'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+            'flicker': 'flicker 0.8s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-18px) rotate(2deg)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.45', transform: 'scale(1)' },
+              '50%': { opacity: '0.8', transform: 'scale(1.08)' },
+            },
+            flicker: {
+              '0%': { transform: 'scale(1) rotate(-2deg)', opacity: '0.92' },
+              '100%': { transform: 'scale(1.08) rotate(2deg)', opacity: '1' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom CSS for Glassmorphism, Candle Flames, and Ambient Effects */
+    body {
+      background-color: #0D0814;
+      color: #FDF8FA;
+      overflow-x: hidden;
+    }
+
+    /* Glassmorphism Utilities */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(244, 182, 194, 0.22);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .glass-pill {
+      background: rgba(244, 182, 194, 0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(244, 182, 194, 0.3);
+    }
+
+    /* Floating Hearts Animation */
+    .floating-heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 60;
+      animation: riseUp 3.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes riseUp {
+      0% {
+        transform: translateY(0) scale(0.6) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-85vh) scale(1.25) rotate(25deg);
+        opacity: 0;
+      }
+    }
+
+    /* Candle Flame & Smoke Animations */
+    .candle-flame {
+      background: radial-gradient(ellipse at bottom, #FFF 0%, #FFE066 45%, #FF7B54 85%, transparent 100%);
+      box-shadow: 0 0 18px 4px rgba(255, 190, 90, 0.75), 0 0 36px 10px rgba(244, 182, 194, 0.45);
+      transition: all 0.4s ease;
+    }
+
+    .candle-flame.blown-out {
+      opacity: 0;
+      transform: scale(0.1) translateY(10px);
+      box-shadow: none;
+    }
+
+    .candle-smoke {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .candle-smoke.active {
+      animation: smokeDrift 2.2s ease-out forwards;
+    }
+
+    @keyframes smokeDrift {
+      0% { opacity: 0.75; transform: translateY(0) scale(0.8); }
+      100% { opacity: 0; transform: translateY(-35px) translateX(12px) scale(1.8); }
+    }
+
+    /* Typewriter Cursor */
+    .typewriter-cursor::after {
+      content: '|';
+      color: #F4B6C2;
+      animation: blink 1s step-end infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Smooth Fade In */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    /* Animated Custom Character Styles (One-Eye Wink & Gentle Bob) */
+    .wink-eye-open {
+      transform-origin: 175px 158px;
+      animation: eyeOpenWink 4.5s infinite;
+    }
+
+    .wink-eye-closed {
+      opacity: 0;
+      animation: eyeClosedWink 4.5s infinite;
+    }
+
+    .character-card.manual-wink .wink-eye-open {
+      animation: none;
+      opacity: 0;
+    }
+
+    .character-card.manual-wink .wink-eye-closed {
+      animation: none;
+      opacity: 1;
+    }
+
+    @keyframes eyeOpenWink {
+      0%, 42%, 56%, 100% {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+      46%, 52% {
+        opacity: 0;
+        transform: scaleY(0.1);
+      }
+    }
+
+    @keyframes eyeClosedWink {
+      0%, 42%, 56%, 100% {
+        opacity: 0;
+      }
+      46%, 52% {
+        opacity: 1;
+      }
+    }
+
+    .character-bob {
+      animation: gentleBob 4s ease-in-out infinite;
+    }
+
+    @keyframes gentleBob {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0D0814;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(244, 182, 194, 0.3);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(244, 182, 194, 0.55);
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-rosegold-400/30 selection:text-champagne relative">
+
+  <!-- Ambient Background Glows & Starfield Canvas -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute -top-32 -left-24 w-96 h-96 rounded-full bg-rosegold-500/20 blur-[120px] animate-pulse-glow"></div>
+    <div class="absolute top-1/3 -right-32 w-[28rem] h-[28rem] rounded-full bg-purple-700/20 blur-[130px] animate-float-slow"></div>
+    <div class="absolute -bottom-32 left-1/4 w-[30rem] h-[30rem] rounded-full bg-rosegold-400/15 blur-[140px] animate-float-delayed"></div>
+    <canvas id="starfieldCanvas" class="w-full h-full opacity-60"></canvas>
+  </div>
+
+  <!-- Minimal Floating Navigation Bar -->
+  <header class="fixed top-4 left-0 right-0 z-40 px-4">
+    <nav class="max-w-4xl mx-auto glass-card rounded-full px-5 py-3 flex items-center justify-between gap-3">
+      <a href="#hero" class="font-serif italic text-base sm:text-lg text-champagne tracking-wide flex items-center gap-2">
+        <span class="text-rosegold-400">✦</span>
+        <span id="navBrandName">For My Sunshai</span>
+      </a>
+
+      <div class="hidden sm:flex items-center gap-6 text-xs uppercase tracking-widest text-rose-100/80">
+        <a href="#letter" class="hover:text-rosegold-300 transition-colors">Birthday Message</a>
+        <a href="#wish" class="hover:text-rosegold-300 transition-colors">Make a Wish</a>
+      </div>
+
+      <button id="navCelebrateBtn" type="button" class="glass-pill hover:bg-rosegold-400/25 text-xs uppercase tracking-widest text-champagne px-4 py-2 rounded-full flex items-center gap-1.5 transition-all cursor-pointer">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-rosegold-300"></i>
+        <span>Celebrate!</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="relative z-10">
+
+    <!-- =========================================================
+         1. HERO SECTION WITH GLASSMORPHISM BIRTHDAY CARD
+         ========================================================= -->
+    <section id="hero" class="min-h-screen flex items-center justify-center px-4 pt-24 pb-16">
+      <div class="max-w-3xl w-full mx-auto">
+        <div class="glass-card rounded-[2rem] p-8 sm:p-12 md:p-16 text-center relative overflow-hidden">
+          <!-- Subtle Corner Accent Rings -->
+          <div class="absolute -top-16 -right-16 w-48 h-48 rounded-full border border-rosegold-400/20 pointer-events-none"></div>
+          <div class="absolute -bottom-20 -left-20 w-56 h-56 rounded-full border border-champagne/15 pointer-events-none"></div>
+
+          <!-- Date Badge -->
+          <div class="inline-flex items-center gap-2 glass-pill px-4 py-1.5 rounded-full text-xs uppercase tracking-[0.2em] text-champagne mb-6">
+            <i data-lucide="calendar-heart" class="w-3.5 h-3.5 text-rosegold-400"></i>
+            <span id="displayDate">November 12 • A Very Special Day</span>
+          </div>
+
+          <!-- Main Headline -->
+          <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight leading-tight text-white mb-4">
+            Happy Birthday, <br class="sm:hidden">
+            <span id="displayName" class="italic bg-gradient-to-r from-rosegold-300 via-champagne to-rosegold-400 bg-clip-text text-transparent">
+              My Sunshai
+            </span>
+          </h1>
+
+          <!-- Subtitle -->
+          <p id="displaySubtitle" class="font-editorial text-xl sm:text-2xl text-rose-100/85 max-w-xl mx-auto leading-relaxed mb-10">
+            Today the universe celebrates the day you were born—and every single day, I celebrate being lucky enough to love you.
+          </p>
+
+          <!-- Interactive Action Buttons -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button id="celebrateBtn" type="button" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-rosegold-500 to-rosegold-400 text-twilight-950 font-semibold text-sm tracking-wide shadow-[0_0_30px_rgba(244,182,194,0.45)] hover:shadow-[0_0_45px_rgba(244,182,194,0.75)] hover:scale-[1.03] active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer">
+              <i data-lucide="heart" class="w-4 h-4 fill-twilight-950"></i>
+              <span>Send Birthday Love & Confetti</span>
+            </button>
+
+            <a href="#letter" class="w-full sm:w-auto px-7 py-4 rounded-full glass-pill hover:bg-white/10 text-champagne font-medium text-sm tracking-wide transition-all flex items-center justify-center gap-2">
+              <span>Read Your Message</span>
+              <i data-lucide="arrow-down" class="w-4 h-4 text-rosegold-300"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         2. HEARTFELT LOVE LETTER SECTION
+         ========================================================= -->
+    <section id="letter" class="py-20 px-4 max-w-3xl mx-auto">
+      <div class="glass-card rounded-[2rem] p-8 sm:p-12 md:p-14 relative">
+        <div class="flex items-center justify-between border-b border-rosegold-400/20 pb-6 mb-8">
+          <div>
+            <span class="text-xs uppercase tracking-[0.25em] text-rosegold-400">A Note From My Heart</span>
+            <h2 class="font-serif text-2xl sm:text-4xl text-white mt-1">My Birthday Wish For You</h2>
+          </div>
+          <div class="w-12 h-12 rounded-full glass-pill flex items-center justify-center text-rosegold-300">
+            <i data-lucide="feather" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+        <!-- Love Letter Body -->
+        <div class="font-editorial text-xl sm:text-2xl leading-relaxed text-rose-50/90 space-y-5 min-h-[220px]">
+          <p id="letterGreeting" class="italic text-champagne font-semibold">Dearest My Sunshai,</p>
+          <p id="typewriterText" class="typewriter-cursor whitespace-pre-line"></p>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-rosegold-400/15 flex flex-wrap items-center justify-between gap-4">
+          <div class="font-serif italic text-lg text-rosegold-300">
+            Forever yours, <span id="displaySender" class="text-champagne">Your Biggest Fan</span> ❤️
+          </div>
+
+          <button id="replayLetterBtn" type="button" class="glass-pill hover:bg-rosegold-400/20 text-xs uppercase tracking-widest text-champagne px-4 py-2 rounded-full flex items-center gap-2 transition-all cursor-pointer">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            <span>Replay Letter</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         3. INTERACTIVE "MAKE A WISH" BIRTHDAY CAKE SECTION
+         ========================================================= -->
+    <section id="wish" class="py-24 px-4 max-w-3xl mx-auto text-center">
+      <div class="glass-card rounded-[2rem] p-8 sm:p-14 relative overflow-hidden">
+        <span class="text-xs uppercase tracking-[0.25em] text-rosegold-400 font-medium">Close Your Eyes</span>
+        <h2 class="font-serif text-3xl sm:text-5xl text-white mt-2 mb-3">Make a Birthday Wish</h2>
+        <p id="wishInstruction" class="text-rose-100/80 text-sm sm:text-base max-w-md mx-auto mb-10">
+          Think of your biggest dream for this new year, then click the candles (or the button below) to blow them out!
+        </p>
+
+        <!-- Interactive Birthday Cake -->
+        <div id="cakeContainer" role="button" tabindex="0" aria-label="Birthday cake with lit candles. Click to blow out." class="relative w-64 sm:w-72 h-64 mx-auto my-6 flex flex-col items-center justify-end cursor-pointer select-none group" title="Click to blow out the candles!">
+
+          <!-- Candles Row -->
+          <div class="flex items-end justify-center gap-7 mb-[-6px] z-20">
+            <!-- Candle 1 -->
+            <div class="flex flex-col items-center relative">
+              <div class="candle-smoke w-3 h-3 rounded-full bg-white/50 blur-[2px] absolute -top-7"></div>
+              <div class="candle-flame w-4 h-6 rounded-full animate-flicker mb-1"></div>
+              <div class="w-3 h-12 rounded-t-md bg-gradient-to-b from-champagne via-rosegold-300 to-rosegold-500 border border-white/30 shadow-md"></div>
+            </div>
+            <!-- Candle 2 (Center Tall) -->
+            <div class="flex flex-col items-center relative">
+              <div class="candle-smoke w-3 h-3 rounded-full bg-white/50 blur-[2px] absolute -top-7"></div>
+              <div class="candle-flame w-4 h-7 rounded-full animate-flicker mb-1" style="animation-delay: 0.2s;"></div>
+              <div class="w-3.5 h-16 rounded-t-md bg-gradient-to-b from-champagne via-rosegold-300 to-rosegold-500 border border-white/30 shadow-md"></div>
+            </div>
+            <!-- Candle 3 -->
+            <div class="flex flex-col items-center relative">
+              <div class="candle-smoke w-3 h-3 rounded-full bg-white/50 blur-[2px] absolute -top-7"></div>
+              <div class="candle-flame w-4 h-6 rounded-full animate-flicker mb-1" style="animation-delay: 0.4s;"></div>
+              <div class="w-3 h-12 rounded-t-md bg-gradient-to-b from-champagne via-rosegold-300 to-rosegold-500 border border-white/30 shadow-md"></div>
+            </div>
+          </div>
+
+          <!-- Top Tier -->
+          <div class="w-40 h-14 rounded-t-2xl bg-gradient-to-r from-rosegold-400 via-rosegold-300 to-rosegold-400 relative z-10 shadow-lg border-t border-white/40 flex items-start overflow-hidden">
+            <!-- Frosting Drips -->
+            <div class="w-full flex justify-between px-1">
+              <span class="w-5 h-5 rounded-b-full bg-champagne/95"></span>
+              <span class="w-6 h-7 rounded-b-full bg-champagne/95"></span>
+              <span class="w-5 h-4 rounded-b-full bg-champagne/95"></span>
+              <span class="w-6 h-6 rounded-b-full bg-champagne/95"></span>
+              <span class="w-5 h-5 rounded-b-full bg-champagne/95"></span>
+            </div>
+          </div>
+
+          <!-- Bottom Tier -->
+          <div class="w-56 h-20 rounded-t-2xl rounded-b-lg bg-gradient-to-r from-rosegold-600 via-rosegold-500 to-rosegold-600 relative z-10 shadow-2xl border-t border-white/30 flex flex-col justify-between overflow-hidden">
+            <div class="w-full flex justify-between px-1.5">
+              <span class="w-6 h-5 rounded-b-full bg-champagne/90"></span>
+              <span class="w-7 h-8 rounded-b-full bg-champagne/90"></span>
+              <span class="w-6 h-5 rounded-b-full bg-champagne/90"></span>
+              <span class="w-7 h-7 rounded-b-full bg-champagne/90"></span>
+              <span class="w-6 h-6 rounded-b-full bg-champagne/90"></span>
+              <span class="w-6 h-4 rounded-b-full bg-champagne/90"></span>
+            </div>
+            <!-- Gold Ribbon Trim -->
+            <div class="w-full h-2.5 bg-gradient-to-r from-amber-200/60 via-champagne to-amber-200/60 mb-3"></div>
+          </div>
+
+          <!-- Cake Stand Plate -->
+          <div class="w-64 sm:w-72 h-3.5 rounded-full bg-gradient-to-r from-white/20 via-champagne/70 to-white/20 shadow-[0_10px_25px_rgba(0,0,0,0.6)]"></div>
+        </div>
+
+        <!-- Blow Candles / Relight Button -->
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button id="blowCandlesBtn" type="button" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-champagne to-rosegold-300 text-twilight-950 font-semibold text-sm tracking-wide shadow-[0_0_25px_rgba(249,231,210,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer">
+            <span id="blowBtnIconWrap" class="inline-flex items-center">
+              <i data-lucide="wind" class="w-4 h-4"></i>
+            </span>
+            <span id="blowBtnLabel">Blow Out Candles</span>
+          </button>
+        </div>
+
+        <!-- Celebratory Wish Banner (Hidden until candles are blown) -->
+        <div id="wishCelebrationMsg" class="hidden mt-8 p-5 rounded-2xl bg-rosegold-400/15 border border-rosegold-300/30 text-champagne font-editorial text-2xl italic">
+          ✨ May every single wish you made come true this year and always! ✨
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         4. ANIMATED CHARACTER GREETING SECTION (END OF PAGE)
+         ========================================================= -->
+    <section id="characterSection" class="pb-20 px-4 max-w-2xl mx-auto text-center">
+      <div id="characterCard" role="button" tabindex="0" aria-label="Animated character winking. Click to wink again." class="character-card glass-card rounded-[2rem] p-8 sm:p-10 relative overflow-hidden cursor-pointer select-none group transition-transform duration-300 hover:scale-[1.01]">
+        <!-- Subtle Ambient Halo Behind Character -->
+        <div class="w-48 h-48 rounded-full bg-rosegold-400/20 blur-2xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+
+        <!-- Floating Speech / Heart Bubble -->
+        <div class="inline-flex items-center gap-2 glass-pill px-5 py-2.5 rounded-full text-sm sm:text-base font-editorial italic text-champagne shadow-lg mb-3 animate-float-slow">
+          <span id="characterSpeechText">Happy Birthday, My Sunshai!</span>
+          <span class="text-rosegold-300 not-italic">❤️</span>
+        </div>
+
+        <!-- Custom Illustrated SVG Character (Based on Your Photo) -->
+        <div class="relative w-64 sm:w-72 mx-auto my-1 character-bob">
+          <svg viewBox="0 0 300 310" class="w-full h-auto drop-shadow-[0_16px_28px_rgba(0,0,0,0.5)]" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- Soft Skin & Hair Gradients -->
+              <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#F2C6A5"/>
+                <stop offset="100%" stop-color="#DFA580"/>
+              </linearGradient>
+              <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#29272D"/>
+                <stop offset="55%" stop-color="#17161A"/>
+                <stop offset="100%" stop-color="#0E0D10"/>
+              </linearGradient>
+              <!-- Blue-Violet Glasses Lens Reflection -->
+              <linearGradient id="lensTint" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#A5B4FC" stop-opacity="0.28"/>
+                <stop offset="50%" stop-color="#C4B5FD" stop-opacity="0.14"/>
+                <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.32"/>
+              </linearGradient>
+              <!-- Clip Path for Striped T-Shirt -->
+              <clipPath id="shirtClip">
+                <path d="M74 295 C76 245, 96 226, 126 222 L174 222 C204 226, 224 245, 226 295 Z"/>
+              </clipPath>
+              <!-- Circular Avatar Frame Clip -->
+              <clipPath id="frameClip">
+                <circle cx="150" cy="162" r="132"/>
+              </clipPath>
+            </defs>
+
+            <!-- Soft Circular Backdrop Badge -->
+            <circle cx="150" cy="162" r="132" fill="#1C122E" stroke="rgba(244, 182, 194, 0.35)" stroke-width="2.5"/>
+            <circle cx="150" cy="162" r="124" fill="none" stroke="rgba(249, 231, 210, 0.12)" stroke-width="1" stroke-dasharray="4 6"/>
+
+            <g clip-path="url(#frameClip)">
+              <!-- Back Hair Volume -->
+              <path d="M78 158 C68 100, 96 42, 150 42 C204 42, 232 100, 222 158 C215 178, 85 178, 78 158 Z" fill="url(#hairGrad)"/>
+
+              <!-- Neck & Collar Shadow -->
+              <rect x="133" y="196" width="34" height="36" rx="14" fill="#D59872"/>
+              <path d="M133 204 Q150 218 167 204 L167 216 Q150 226 133 216 Z" fill="#BC7E58" opacity="0.55"/>
+
+              <!-- Left Resting Shoulder / Arm -->
+              <path d="M72 295 C68 256, 82 232, 106 226 L114 295 Z" fill="#4A444F"/>
+              <path d="M70 264 L108 264 L110 278 L69 278 Z" fill="#F8F6F8"/>
+
+              <!-- Right Resting Shoulder / Arm (Symmetrical) -->
+              <path d="M228 295 C232 256, 218 232, 194 226 L186 295 Z" fill="#4A444F"/>
+              <path d="M230 264 L192 264 L190 278 L231 278 Z" fill="#F8F6F8"/>
+
+              <!-- Torso: Charcoal-Grey & White Horizontal Striped T-Shirt -->
+              <g clip-path="url(#shirtClip)">
+                <rect x="65" y="218" width="170" height="85" fill="#4B4550"/>
+                <!-- Crisp Horizontal White Stripes -->
+                <rect x="65" y="236" width="170" height="14" fill="#F7F5F8"/>
+                <rect x="65" y="264" width="170" height="15" fill="#F7F5F8"/>
+                <!-- Subtle Shirt Fold Shading -->
+                <path d="M126 222 Q150 242 174 222" fill="none" stroke="#2D2832" stroke-width="3"/>
+              </g>
+              <!-- Crewneck Collar Trim -->
+              <path d="M124 222 Q150 243 176 222" fill="none" stroke="#36313B" stroke-width="5" stroke-linecap="round"/>
+
+              <!-- Ears -->
+              <ellipse cx="94" cy="162" rx="9" ry="15" fill="#E3AA84"/>
+              <ellipse cx="206" cy="162" rx="9" ry="15" fill="#E3AA84"/>
+
+              <!-- Face Shape -->
+              <path d="M96 132 C96 92, 204 92, 204 132 C204 176, 184 210, 150 212 C116 210, 96 176, 96 132 Z" fill="url(#skinGrad)"/>
+
+              <!-- Soft Cheek Blush -->
+              <ellipse cx="114" cy="175" rx="11" ry="6" fill="#E5989B" opacity="0.32"/>
+              <ellipse cx="186" cy="175" rx="11" ry="6" fill="#E5989B" opacity="0.32"/>
+
+              <!-- Expressive Dark Eyebrows -->
+              <path d="M111 142 Q125 135 139 141" fill="none" stroke="#1E1C21" stroke-width="4.2" stroke-linecap="round"/>
+              <path d="M161 141 Q175 134 189 141" fill="none" stroke="#1E1C21" stroke-width="4.2" stroke-linecap="round"/>
+
+              <!-- LEFT EYE (Stays Warm & Open) -->
+              <g>
+                <ellipse cx="125" cy="158" rx="11" ry="7.5" fill="#FFFFFF"/>
+                <circle cx="125" cy="158" r="5.5" fill="#3B2316"/>
+                <circle cx="125" cy="158" r="2.6" fill="#120A06"/>
+                <!-- Eye Sparkle Highlights -->
+                <circle cx="127" cy="156" r="1.8" fill="#FFFFFF"/>
+                <circle cx="122.5" cy="159.5" r="0.9" fill="#FFFFFF" opacity="0.8"/>
+                <path d="M114 156 Q125 148 136 156" fill="none" stroke="#231815" stroke-width="2" stroke-linecap="round"/>
+              </g>
+
+              <!-- RIGHT EYE (Animated Playful Wink / Blink!) -->
+              <g class="wink-eye-open">
+                <ellipse cx="175" cy="158" rx="11" ry="7.5" fill="#FFFFFF"/>
+                <circle cx="175" cy="158" r="5.5" fill="#3B2316"/>
+                <circle cx="175" cy="158" r="2.6" fill="#120A06"/>
+                <circle cx="177" cy="156" r="1.8" fill="#FFFFFF"/>
+                <circle cx="172.5" cy="159.5" r="0.9" fill="#FFFFFF" opacity="0.8"/>
+                <path d="M164 156 Q175 148 186 156" fill="none" stroke="#231815" stroke-width="2" stroke-linecap="round"/>
+              </g>
+              <!-- Closed Cute Wink Arc -->
+              <g class="wink-eye-closed">
+                <path d="M164 159 Q175 151 186 159" fill="none" stroke="#231815" stroke-width="2.8" stroke-linecap="round"/>
+                <path d="M184 157 L188 154" fill="none" stroke="#231815" stroke-width="1.8" stroke-linecap="round"/>
+              </g>
+
+              <!-- Gentle Nose Shading -->
+              <path d="M150 156 L147 174 Q150 177 154 174" fill="none" stroke="#C68761" stroke-width="2.2" stroke-linecap="round"/>
+
+              <!-- Warm Gentle Smile -->
+              <path d="M136 188 Q150 198 164 188" fill="none" stroke="#9E554B" stroke-width="2.8" stroke-linecap="round"/>
+              <path d="M144 194 Q150 196.5 156 194" fill="none" stroke="#D18A76" stroke-width="1.5" stroke-linecap="round"/>
+
+              <!-- Rectangular Black-Rimmed Glasses with Blue-Violet Lens Reflection -->
+              <g>
+                <!-- Temple Arms -->
+                <line x1="95" y1="152" x2="104" y2="155" stroke="#18181B" stroke-width="3"/>
+                <line x1="205" y1="152" x2="196" y2="155" stroke="#18181B" stroke-width="3"/>
+                <!-- Left Frame & Lens -->
+                <rect x="104" y="148" width="40" height="22" rx="6" fill="url(#lensTint)" stroke="#18181B" stroke-width="3.6"/>
+                <!-- Right Frame & Lens -->
+                <rect x="156" y="148" width="40" height="22" rx="6" fill="url(#lensTint)" stroke="#18181B" stroke-width="3.6"/>
+                <!-- Nose Bridge -->
+                <path d="M144 156 Q150 153 156 156" fill="none" stroke="#18181B" stroke-width="3.8" stroke-linecap="round"/>
+                <!-- Subtle Diagonal Lens Glare -->
+                <line x1="111" y1="166" x2="120" y2="151" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+                <line x1="163" y1="166" x2="172" y2="151" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+              </g>
+
+              <!-- Thick Fluffy Dark Hair & Wispy Forehead Bangs (Layered over top of forehead) -->
+              <path d="M84 148 C76 92, 102 46, 150 46 C198 46, 224 92, 216 148 C213 130, 206 118, 198 114 C194 126, 188 134, 182 136 C180 124, 174 115, 168 112 C164 126, 157 135, 150 137 C144 125, 138 116, 132 112 C126 125, 118 134, 111 136 C106 124, 100 116, 95 114 C89 122, 86 134, 84 148 Z" fill="url(#hairGrad)"/>
+              <!-- Soft Hair Texture Strands -->
+              <path d="M116 68 Q132 88 126 124 M150 62 Q154 88 150 128 M182 68 Q170 90 174 124" fill="none" stroke="#34313B" stroke-width="2" stroke-linecap="round" opacity="0.65"/>
+            </g>
+
+            <!-- Floating Mini Hearts Around Character -->
+            <path d="M56 112 C56 106, 47 106, 47 112 C47 118, 56 124, 56 124 C56 124, 65 118, 65 112 C65 106, 56 106, 56 112 Z" fill="#F4B6C2" opacity="0.85"/>
+            <path d="M254 118 C254 113, 247 113, 247 118 C247 123, 254 128, 254 128 C254 128, 261 123, 261 118 C261 113, 254 113, 254 118 Z" fill="#FADADD" opacity="0.9"/>
+          </svg>
+        </div>
+
+        <p class="text-xs uppercase tracking-[0.2em] text-rosegold-300/80 mt-2">
+          Tap me for an extra wink & birthday love ✨
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative z-10 py-10 text-center text-xs text-rose-200/50 tracking-widest uppercase">
+    Made with all my love • Happy Birthday <span id="footerName">My Sunshai</span>
+  </footer>
+
+  <!-- =========================================================
+       JAVASCRIPT: CONFIGURATION & INTERACTIVITY
+       ========================================================= -->
+  <script>
+    /**
+     * =========================================================================
+     * EASY CONFIGURATION BLOCK
+     * Customize the birthday date, subtitle, love letter, or signature here.
+     * =========================================================================
+     */
+    const CONFIG = {
+      recipientName: "My Sunshai",
+      birthdayDate: "November 15 • A Very Special Day",
+      heroSubtitle: "Today the universe celebrates the day you were born—and every single day, I celebrate being lucky enough to love you.",
+      senderSignature: "Your Biggest Fan",
+      loveLetterParagraphs: [
+        "Happy Birthday, My Sunshai! From the moment you came into my life, you have filled every ordinary day with warmth, laughter, and a light that makes everything brighter.",
+        "Thank you for your kindness, your gorgeous smile, and the effortless way you make me feel at home wherever we are. Watching you grow, dream, and shine is my favorite privilege in this world.",
+        "May this new chapter bring you endless joy, gentle mornings, bold adventures, and every single thing your heart wishes for. I love you more than words could ever hold."
+      ]
+    };
+
+    /**
+     * =========================================================================
+     * AMBIENT TWILIGHT STARFIELD CANVAS
+     * =========================================================================
+     */
+    function initStarfield() {
+      const canvas = document.getElementById('starfieldCanvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      let stars = [];
+      const STAR_COUNT = 75;
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      function createStars() {
+        stars = [];
+        for (let i = 0; i < STAR_COUNT; i++) {
+          stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 1.6 + 0.4,
+            alpha: Math.random() * 0.8 + 0.2,
+            delta: (Math.random() * 0.015 + 0.005) * (Math.random() < 0.5 ? 1 : -1)
+          });
+        }
+      }
+
+      function renderStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (const star of stars) {
+          star.alpha += star.delta;
+          if (star.alpha <= 0.15 || star.alpha >= 0.95) {
+            star.delta *= -1;
+          }
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(249, 231, 210, ${star.alpha})`;
+          ctx.fill();
+        }
+        requestAnimationFrame(renderStars);
+      }
+
+      resizeCanvas();
+      createStars();
+      renderStars();
+
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+        createStars();
+      });
+    }
+
+    /**
+     * =========================================================================
+     * FLOATING HEARTS & CONFETTI CELEBRATION
+     * =========================================================================
+     */
+    function spawnFloatingHearts(count = 14) {
+      const heartSymbols = ['❤️', '💖', '✨', '💕', '🌸'];
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'floating-heart select-none';
+          heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+          heart.style.left = `${Math.random() * 90 + 5}vw`;
+          heart.style.bottom = '-20px';
+          heart.style.fontSize = `${Math.random() * 16 + 16}px`;
+          document.body.appendChild(heart);
+
+          setTimeout(() => {
+            heart.remove();
+          }, 3300);
+        }, i * 110);
+      }
+    }
+
+    function launchBirthdayConfetti() {
+      if (typeof confetti === 'function') {
+        const colors = ['#F4B6C2', '#FADADD', '#F9E7D2', '#E5989B', '#FFFFFF'];
+        confetti({
+          particleCount: 80,
+          spread: 75,
+          origin: { y: 0.65 },
+          colors: colors
+        });
+        setTimeout(() => {
+          confetti({
+            particleCount: 45,
+            angle: 60,
+            spread: 60,
+            origin: { x: 0, y: 0.7 },
+            colors: colors
+          });
+          confetti({
+            particleCount: 45,
+            angle: 120,
+            spread: 60,
+            origin: { x: 1, y: 0.7 },
+            colors: colors
+          });
+        }, 220);
+      }
+      spawnFloatingHearts(14);
+    }
+
+    /**
+     * =========================================================================
+     * WEB AUDIO CELEBRATION CHIME (NO EXTERNAL SOUND FILES REQUIRED)
+     * =========================================================================
+     */
+    function playWishChime() {
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+
+        const audioCtx = new AudioContextClass();
+        if (audioCtx.state === 'suspended' && typeof audioCtx.resume === 'function') {
+          audioCtx.resume();
+        }
+
+        // Gentle celebratory arpeggio (C5 - E5 - G5 - B5 - C6)
+        const notes = [523.25, 659.25, 783.99, 987.77, 1046.50];
+
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.12);
+
+          gain.gain.setValueAtTime(0.001, audioCtx.currentTime + idx * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + idx * 0.12 + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + idx * 0.12 + 1.1);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start(audioCtx.currentTime + idx * 0.12);
+          osc.stop(audioCtx.currentTime + idx * 0.12 + 1.15);
+        });
+      } catch (err) {
+        // Gracefully ignore if browser blocks audio context
+      }
+    }
+
+    /**
+     * =========================================================================
+     * TYPEWRITER LOVE LETTER ENGINE
+     * =========================================================================
+     */
+    let typewriterTimer = null;
+
+    function startTypewriterLetter() {
+      const targetEl = document.getElementById('typewriterText');
+      if (!targetEl) return;
+
+      if (typewriterTimer) {
+        clearTimeout(typewriterTimer);
+        typewriterTimer = null;
+      }
+
+      const fullText = CONFIG.loveLetterParagraphs.join('\n\n');
+      targetEl.textContent = '';
+      targetEl.classList.add('typewriter-cursor');
+
+      let index = 0;
+
+      function typeNextChar() {
+        if (index < fullText.length) {
+          targetEl.textContent += fullText.charAt(index);
+          const currentChar = fullText.charAt(index);
+          index++;
+
+          // Slight natural pause on punctuation and line breaks
+          let delay = 22;
+          if (currentChar === '\n') delay = 260;
+          else if (currentChar === '.' || currentChar === '!' || currentChar === '—') delay = 180;
+          else if (currentChar === ',') delay = 95;
+
+          typewriterTimer = setTimeout(typeNextChar, delay);
+        } else {
+          targetEl.classList.remove('typewriter-cursor');
+        }
+      }
+
+      typeNextChar();
+    }
+
+    /**
+     * =========================================================================
+     * INTERACTIVE BIRTHDAY CAKE (BLOW OUT & RELIGHT CANDLES)
+     * =========================================================================
+     */
+    let candlesLit = true;
+
+    function toggleCandles() {
+      const flames = document.querySelectorAll('.candle-flame');
+      const smokes = document.querySelectorAll('.candle-smoke');
+      const blowBtnLabel = document.getElementById('blowBtnLabel');
+      const blowBtnIconWrap = document.getElementById('blowBtnIconWrap');
+      const celebrationMsg = document.getElementById('wishCelebrationMsg');
+      const wishInstruction = document.getElementById('wishInstruction');
+
+      candlesLit = !candlesLit;
+
+      if (!candlesLit) {
+        // Blow out candles
+        flames.forEach(flame => flame.classList.add('blown-out'));
+        smokes.forEach(smoke => {
+          smoke.classList.remove('active');
+          void smoke.offsetWidth; // Force reflow so smoke animation restarts cleanly
+          smoke.classList.add('active');
+        });
+
+        if (blowBtnLabel) blowBtnLabel.textContent = 'Relight Candles';
+        if (blowBtnIconWrap) {
+          blowBtnIconWrap.innerHTML = '<i data-lucide="flame" class="w-4 h-4"></i>';
+        }
+        if (celebrationMsg) {
+          celebrationMsg.classList.remove('hidden');
+          celebrationMsg.classList.add('animate-fade-in');
+        }
+        if (wishInstruction) {
+          wishInstruction.textContent = 'Your wish has been sent up to the stars! Click below anytime to relight the candles.';
+        }
+
+        playWishChime();
+        launchBirthdayConfetti();
+      } else {
+        // Relight candles
+        flames.forEach(flame => flame.classList.remove('blown-out'));
+        smokes.forEach(smoke => smoke.classList.remove('active'));
+
+        if (blowBtnLabel) blowBtnLabel.textContent = 'Blow Out Candles';
+        if (blowBtnIconWrap) {
+          blowBtnIconWrap.innerHTML = '<i data-lucide="wind" class="w-4 h-4"></i>';
+        }
+        if (celebrationMsg) celebrationMsg.classList.add('hidden');
+        if (wishInstruction) {
+          wishInstruction.textContent = 'Think of your biggest dream for this new year, then click the candles (or the button below) to blow them out!';
+        }
+      }
+
+      if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
+    }
+
+    /**
+     * =========================================================================
+     * APPLY CONFIG CONTENT & BIND SAFE EVENT LISTENERS
+     * =========================================================================
+     */
+    function applyConfig() {
+      const navBrandName = document.getElementById('navBrandName');
+      const displayDate = document.getElementById('displayDate');
+      const displayName = document.getElementById('displayName');
+      const displaySubtitle = document.getElementById('displaySubtitle');
+      const letterGreeting = document.getElementById('letterGreeting');
+      const displaySender = document.getElementById('displaySender');
+      const footerName = document.getElementById('footerName');
+
+      if (navBrandName) navBrandName.textContent = `For ${CONFIG.recipientName}`;
+      if (displayDate) displayDate.textContent = CONFIG.birthdayDate;
+      if (displayName) displayName.textContent = CONFIG.recipientName;
+      if (displaySubtitle) displaySubtitle.textContent = CONFIG.heroSubtitle;
+      if (letterGreeting) letterGreeting.textContent = `Dearest ${CONFIG.recipientName},`;
+      if (displaySender) displaySender.textContent = CONFIG.senderSignature;
+      if (footerName) footerName.textContent = CONFIG.recipientName;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      applyConfig();
+
+      if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
+
+      initStarfield();
+      startTypewriterLetter();
+
+      const navCelebrateBtn = document.getElementById('navCelebrateBtn');
+      if (navCelebrateBtn) {
+        navCelebrateBtn.addEventListener('click', launchBirthdayConfetti);
+      }
+
+      const celebrateBtn = document.getElementById('celebrateBtn');
+      if (celebrateBtn) {
+        celebrateBtn.addEventListener('click', launchBirthdayConfetti);
+      }
+
+      const replayLetterBtn = document.getElementById('replayLetterBtn');
+      if (replayLetterBtn) {
+        replayLetterBtn.addEventListener('click', startTypewriterLetter);
+      }
+
+      const cakeContainer = document.getElementById('cakeContainer');
+      if (cakeContainer) {
+        cakeContainer.addEventListener('click', toggleCandles);
+        cakeContainer.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleCandles();
+          }
+        });
+      }
+
+      const blowCandlesBtn = document.getElementById('blowCandlesBtn');
+      if (blowCandlesBtn) {
+        blowCandlesBtn.addEventListener('click', toggleCandles);
+      }
+
+      // Interactive Animated Character Wink Trigger
+      const characterCard = document.getElementById('characterCard');
+      const characterSpeechText = document.getElementById('characterSpeechText');
+      const speechLines = [
+        `Happy Birthday, ${CONFIG.recipientName}!`,
+        "Love you always & forever!",
+        "You're my favorite person!",
+        "Make the sweetest wish today!"
+      ];
+      let speechIndex = 0;
+
+      function triggerCharacterGreeting() {
+        if (!characterCard) return;
+
+        // Trigger a playful wink
+        characterCard.classList.add('manual-wink');
+        setTimeout(() => {
+          characterCard.classList.remove('manual-wink');
+        }, 420);
+
+        // Cycle cute speech bubble message & spawn floating hearts
+        if (characterSpeechText) {
+          speechIndex = (speechIndex + 1) % speechLines.length;
+          characterSpeechText.textContent = speechLines[speechIndex];
+        }
+        spawnFloatingHearts(5);
+      }
+
+      if (characterCard) {
+        characterCard.addEventListener('click', triggerCharacterGreeting);
+        characterCard.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            triggerCharacterGreeting();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
